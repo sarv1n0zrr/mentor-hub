@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_button.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
+import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -15,6 +17,50 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final pwController = TextEditingController();
   final confirmPwController = TextEditingController();
+  final justController = TextEditingController();
+
+  //register button pressed
+  void register() {
+    //prepare info
+    final String name = nameController.text;
+    final String email = emailController.text;
+    final String pw = pwController.text;
+    final String confirmPw = confirmPwController.text;
+    final String just = justController.text;
+
+    // auth cubit
+    final authCubit = context.read<AuthCubit>();
+
+    // ensure the fields are not empty
+    if (email.isNotEmpty &&
+        name.isNotEmpty &&
+        pw.isNotEmpty &&
+        confirmPw.isNotEmpty) {
+      // ensure password match
+      if (pw == confirmPw) {
+        authCubit.register(name, email, confirmPw, pw, just);
+      }
+      // passwords do not match
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Passwords do not match!')));
+      }
+    }
+    // fields are empty -> display error
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please complete all fields')));
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    pwController.dispose();
+    confirmPwController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
