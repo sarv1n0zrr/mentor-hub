@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_button.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:mentor_hub/features/post/presentation/pages/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -115,7 +116,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 25),
                 MyButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
                   text: 'Continue',
                 ),
                 SizedBox(height: 50),
