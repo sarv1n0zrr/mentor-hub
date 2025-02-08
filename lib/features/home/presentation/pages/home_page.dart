@@ -20,6 +20,18 @@ class _HomePageState extends State<HomePage> {
     const Center(child: Text('Profile Page')),
     const Center(child: Text('Settings Page')),
   ];
+
+  void _onItemTapped(int index) {
+    if (index == 2) {
+      // Check if Profile tab is clicked
+      context.read<AuthCubit>().logout(); // Logout user
+    } else {
+      setState(() {
+        _selectedIndex = index; // Change selected tab
+      });
+    }
+  }
+
   // BUILD UI
   @override
   Widget build(BuildContext context) {
@@ -46,16 +58,16 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

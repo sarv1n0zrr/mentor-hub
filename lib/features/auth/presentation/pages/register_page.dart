@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_button.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
-import 'package:mentor_hub/features/post/presentation/pages/home_page.dart';
+
+import '../../../home/presentation/pages/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;

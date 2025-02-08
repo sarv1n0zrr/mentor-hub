@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/data/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
-import 'package:mentor_hub/features/post/presentation/pages/home_page.dart';
 
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
+import 'features/home/presentation/pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
