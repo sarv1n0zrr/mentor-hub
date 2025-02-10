@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentor_hub/features/mentors/presentation/pages/mentors_page.dart';
 
 import '../../../auth/presentation/cubits/auth_cubit.dart';
 import '../../../post/presentation/pages/upload_post_page.dart';
@@ -15,11 +16,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const Center(child: Text('Home Page')),
-    const Center(child: Text('Search Page')),
-    const Center(child: Text('Settings Page')),
-    const Center(child: Text('Favorites Page')),
-    const Center(child: Text('Profile Page')),
+    Center(child: Text('Home Page')),
+    MentorsPage(searchController: SearchController()),
+    Center(child: Text('Settings Page')),
+    Center(child: Text('Favorites Page')),
+    Center(child: Text('Profile Page')),
   ];
 
   void _onItemTapped(int index) {
