@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_button.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
+import 'package:mentor_hub/features/auth/presentation/pages/user_info_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -53,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyTextfield(
                   controller: emailController,
                   hintText: 'Email',
-                  obscureText: true,
+                  obscureText: false,
                 ),
                 SizedBox(height: 10),
                 MyTextfield(
@@ -69,7 +70,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 25),
                 MyButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserInfoPage()),
+                    );
+                  },
                   text: 'Continue',
                 ),
                 SizedBox(height: 50),

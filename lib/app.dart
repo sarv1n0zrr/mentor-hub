@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mentor_hub/features/auth/data/firebase_auth_repo.dart';
+import 'package:mentor_hub/features/auth/data/repository/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
-
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
+import 'features/home/home_page.dart';
 
 class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
               }
 
               if (authState is Authenticated) {
-                // return HomePage();
+                return const HomePage();
               } else {
                 return const Scaffold(
                   body: Center(
