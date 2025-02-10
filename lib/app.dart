@@ -18,27 +18,42 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Raleway',
-          colorScheme: lightMode.colorScheme,
+        theme: lightMode.copyWith(
+          scaffoldBackgroundColor: Colors.transparent,
         ),
+        builder: (context, child) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 90, 154, 226),
+                  Color(0xFFFFFFFF),
+                ], // Gradient colors
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              ),
+            ),
+            child: child,
+          );
+        },
         home: BlocConsumer<AuthCubit, AuthState>(
-            builder: (context, authState) {
-              if (authState is Unauthenticated) {
-                return const AuthPage();
-              }
+          builder: (context, authState) {
+            if (authState is Unauthenticated) {
+              return const AuthPage();
+            }
 
-              if (authState is Authenticated) {
-                return const HomePage();
-              } else {
-                return const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-            },
-            listener: (context, state) {}),
+            if (authState is Authenticated) {
+              return const HomePage();
+            } else {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
+          listener: (context, state) {},
+        ),
       ),
     );
   }
