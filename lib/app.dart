@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/data/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
+import 'package:mentor_hub/features/post/data/firebase_post_repo.dart';
+import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
 
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
@@ -11,6 +13,9 @@ import 'features/home/presentation/pages/home_page.dart';
 class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
 
+  final firebaseStorageRepo = FirebaseStorageRepo();
+
+  final firebasePostRepo = FirebasePostsRepo();
   MyApp({super.key});
 
   @override

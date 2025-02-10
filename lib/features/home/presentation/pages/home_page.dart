@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../auth/presentation/cubits/auth_cubit.dart';
+import '../../../post/presentation/pages/upload_post_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,13 +17,13 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const Center(child: Text('Home Page')),
     const Center(child: Text('Search Page')),
+    const Center(child: Text('Settings Page')),
     const Center(child: Text('Favorites Page')),
     const Center(child: Text('Profile Page')),
-    const Center(child: Text('Settings Page')),
   ];
 
   void _onItemTapped(int index) {
-    if (index == 2) {
+    if (index == 4) {
       // Check if Profile tab is clicked
       context.read<AuthCubit>().logout(); // Logout user
     } else {
@@ -40,14 +41,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         titleSpacing: 5,
         title: const Text('Home'),
+        foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           // logout button
           IconButton(
               onPressed: () {
-                context.read<AuthCubit>().logout();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UploadPostPage()));
               },
               icon: const Icon(
-                Icons.account_circle,
+                Icons.add,
                 size: 40,
               ))
         ],
