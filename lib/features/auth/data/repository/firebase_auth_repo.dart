@@ -35,6 +35,13 @@ class FirebaseAuthRepo implements AuthRepo {
           email: email,
           role: role,
           udesc: udesc);
+
+      // save user data in firestore
+      await firebaseFirestore
+          .collection('users')
+          .doc(user.uid)
+          .set(user.toJson());
+
       return user;
     } catch (e) {
       throw Exception('Login failed: $e');
