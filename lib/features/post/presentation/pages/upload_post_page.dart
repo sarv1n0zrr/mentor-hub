@@ -125,8 +125,12 @@ class _UploadPostPageState extends State<UploadPostPage> {
   Widget buildUploadedPage() {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Post'),
+        title: const Text('Create Post'),
         foregroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          // upload button
+          IconButton(onPressed: uploadPost, icon: const Icon(Icons.upload))
+        ],
       ),
       body: Center(
         child: Column(

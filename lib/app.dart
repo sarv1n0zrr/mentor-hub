@@ -4,6 +4,7 @@ import 'package:mentor_hub/features/auth/data/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
 import 'package:mentor_hub/features/post/data/firebase_post_repo.dart';
+import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
 import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
 
 import 'core/theme/light_mode.dart';
@@ -20,8 +21,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
+    return MultiBlocProvider(
+      providers: [
+        // auth cubit
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
+        ),
+
+        // profile cubit
+        // BlocProvider<ProfileCubit>(
+        //     create: (context) => ProfileCubit(
+        //         profileRepo: firebaseProfileRepo,
+        //         storageRepo: firebaseStorageRepo))
+
+        // post cubit
+        BlocProvider<PostCubit>(
+            create: (context) => PostCubit(
+                postRepo: firebasePostRepo, storageRepo: firebaseStorageRepo))
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightMode,
