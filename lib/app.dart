@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: lightMode,
+        theme: ThemeData(
+          fontFamily: 'Raleway',
+          colorScheme: lightMode.colorScheme,
+        ),
         home: BlocConsumer<AuthCubit, AuthState>(
             builder: (context, authState) {
               if (authState is Unauthenticated) {
