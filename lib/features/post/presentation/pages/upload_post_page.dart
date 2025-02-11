@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/post/domain/entitles/post.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
-import 'package:mentor_hub/features/post/presentation/cubits/post_states.dart';
 
 import '../../../auth/domain/entities/app_user.dart';
+import '../cubits/post_states.dart';
 
 class UploadPostPage extends StatefulWidget {
   const UploadPostPage({super.key});
@@ -129,10 +129,10 @@ class _UploadPostPageState extends State<UploadPostPage> {
   Widget buildUploadedPage() {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: const Text(
           'Create Post',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.purple),
         ),
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
@@ -193,7 +193,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
             ElevatedButton(
               onPressed: pickImages,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.purple,
                 foregroundColor: Colors.white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
