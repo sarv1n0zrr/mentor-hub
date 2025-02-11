@@ -90,8 +90,6 @@ class _PostTileState extends State<PostTile> {
               ],
             ),
           ),
-
-          /// Post Image
           CachedNetworkImage(
             imageUrl: widget.post.imageUrl,
             height: 250,
@@ -104,7 +102,6 @@ class _PostTileState extends State<PostTile> {
             errorWidget: (context, url, error) =>
                 const Icon(Icons.error_outline),
           ),
-
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
@@ -112,7 +109,6 @@ class _PostTileState extends State<PostTile> {
               style: const TextStyle(fontSize: 14),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
