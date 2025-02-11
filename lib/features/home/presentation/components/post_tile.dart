@@ -22,24 +22,19 @@ class _PostTileState extends State<PostTile> {
   late final profileCubit = context.read<PostCubit>();
 
   bool isOwnPost = false;
-
   AppUser? currentUser;
 
   @override
   void initState() {
     super.initState();
-
     getCurrentUser();
-    fetchPostUser();
   }
 
   void getCurrentUser() {
     final authCubit = context.read<AuthCubit>();
     currentUser = authCubit.currentUser;
-    isOwnPost = (widget.post.userId == currentUser!.uid);
+    isOwnPost = (widget.post.userId == currentUser?.uid);
   }
-
-  Future<void> fetchPostUser() async {}
 
   void showOptions() {
     showDialog(
@@ -53,7 +48,7 @@ class _PostTileState extends State<PostTile> {
           ),
           TextButton(
             onPressed: () {
-              widget.onDeletePressed!();
+              widget.onDeletePressed?.call();
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),
@@ -65,26 +60,78 @@ class _PostTileState extends State<PostTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      height: 400,
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Icon(Icons.person),
-              IconButton(onPressed: showOptions, icon: const Icon(Icons.delete))
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child: Icon(Icons.person, color: Colors.white),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    "User",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                if (isOwnPost)
+                  IconButton(
+                    onPressed: showOptions,
+                    icon: const Icon(Icons.more_vert),
+                  ),
+              ],
+            ),
           ),
+
+          /// Post Image
           CachedNetworkImage(
             imageUrl: widget.post.imageUrl,
-            height: 350,
+            height: 250,
             width: double.infinity,
             fit: BoxFit.cover,
-            placeholder: (context, url) => const SizedBox(height: 430),
+            placeholder: (context, url) => Container(
+              height: 250,
+              color: Colors.grey[300],
+            ),
             errorWidget: (context, url, error) =>
                 const Icon(Icons.error_outline),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              "",
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.thumb_up_off_alt),
+                ),
+                const Text("Like"),
+                const SizedBox(width: 20),
+                IconButton(
+                  onPressed: () {
+                    // Navigate to comments
+                  },
+                  icon: const Icon(Icons.comment_outlined),
+                ),
+                const Text("Comment"),
+              ],
+            ),
           ),
         ],
       ),
