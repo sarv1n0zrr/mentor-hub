@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 90, 154, 226),
+                  Color(0xFFFFFFFF),
                   Color(0xFFFFFFFF),
                 ], // Gradient colors
                 begin: Alignment.topRight,
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (authState is Authenticated) {
-              return const HomePage();
+              return HomePage();
             } else {
               return const Scaffold(
                 body: Center(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MentorsPage extends StatefulWidget {
   const MentorsPage({super.key, required this.searchController});
-  final SearchController searchController;
+  final TextEditingController searchController;
 
   @override
   State<MentorsPage> createState() => _MentorsPageState();
@@ -52,7 +52,7 @@ class _MentorsPageState extends State<MentorsPage> {
                           border: Border.all(color: Colors.black)),
                       child: Center(
                         child: Text(
-                          "Subject",
+                          "Location",
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -68,7 +68,7 @@ class _MentorsPageState extends State<MentorsPage> {
                           border: Border.all(color: Colors.black)),
                       child: Center(
                         child: Text(
-                          "Subject",
+                          "Price",
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -84,7 +84,25 @@ class _MentorsPageState extends State<MentorsPage> {
                           border: Border.all(color: Colors.black)),
                       child: Center(
                         child: Text(
-                          "Subject",
+                          "Duration",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      width: 80,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(7),
+                          border: Border.all(color: Colors.black)),
+                      child: Center(
+                        child: Text(
+                          "Popular",
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -732,18 +750,18 @@ class _MentorsPageState extends State<MentorsPage> {
               decoration: BoxDecoration(
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.white)),
+                  border: Border.all(color: Colors.black)),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Search",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.black),
                     prefixIcon: IconButton(
                         onPressed: _onSearch,
                         icon: const Icon(
                           Icons.search,
-                          color: Colors.white,
+                          color: Colors.black,
                         )),
                     contentPadding: EdgeInsets.symmetric(vertical: 15)),
               ),
