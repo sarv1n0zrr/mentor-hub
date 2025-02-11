@@ -64,7 +64,6 @@ class _UploadPostPageState extends State<UploadPostPage> {
     }
   }
 
-  // create & upload post
   void uploadPost() {
     // check if both image and caption are provided
     if (imagePickedFiles == null || textController.text.isEmpty) {
@@ -137,7 +136,6 @@ class _UploadPostPageState extends State<UploadPostPage> {
         ),
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
-          // upload button
           IconButton(
               onPressed: uploadPost,
               icon: const Icon(
