@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/home/presentation/components/post_tile.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_states.dart';
+import 'package:mentor_hub/features/post/presentation/pages/upload_post_page.dart';
 
 import '../../../auth/presentation/cubits/auth_cubit.dart';
 
@@ -20,7 +21,8 @@ class _HomePageState extends State<HomePage> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 2) {
-        _isCreatingPost = true; // Show Create Post form
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => UploadPostPage()));
       } else {
         _selectedIndex = index;
       }
