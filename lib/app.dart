@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (authState is Authenticated) {
-              return const HomePage();
+              return HomePage();
             } else {
               return const Scaffold(
                 body: Center(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MentorsPage extends StatefulWidget {
   const MentorsPage({super.key, required this.searchController});
-  final SearchController searchController;
+  final TextEditingController searchController;
 
   @override
   State<MentorsPage> createState() => _MentorsPageState();

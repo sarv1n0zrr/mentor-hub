@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/home/presentation/components/post_tile.dart';
+import 'package:mentor_hub/features/mentors/presentation/pages/mentors_page.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_states.dart';
-
-import '../../../auth/presentation/cubits/auth_cubit.dart';
+import 'package:mentor_hub/features/profile/presentation/pages/profile_page.dart';
 import '../../../post/presentation/pages/upload_post_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,19 +16,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-
+  final TextEditingController _searchController = TextEditingController();
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
 
-    if (index == 4) {
-      context.read<AuthCubit>().logout();
-    }
+    // if (index == 4) {
+    //   context.read<AuthCubit>().logout();
+    // }
 
+    if (index == 1) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MentorsPage(searchController: _searchController)));
+    }
     if (index == 2) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => UploadPostPage()));
+    }
+
+    if (index == 4) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfilePage()));
     }
   }
 
