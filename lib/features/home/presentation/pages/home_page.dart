@@ -9,7 +9,6 @@ import '../../../auth/presentation/cubits/auth_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final postCubit = context.read<PostCubit>();
+  bool _isCreatingPost = false;
 
   @override
   void initState() {
