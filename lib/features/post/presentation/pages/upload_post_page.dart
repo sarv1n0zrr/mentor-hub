@@ -73,7 +73,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
           const SnackBar(content: Text('Both image and caption are required')));
       return;
     }
-    String? imageUrl;
+
     // create a new post object
     final newPost = Post(
         id: DateTime.now().millisecondsSinceEpoch.toString(),

@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../auth/domain/entities/app_user.dart';
+import '../../../auth/presentation/cubits/auth_cubit.dart';
 import '../../../post/domain/entitles/post.dart';
+import '../../../post/presentation/cubits/post_cubit.dart';
 
 class PostTile extends StatefulWidget {
   final Post post;
@@ -14,6 +18,29 @@ class PostTile extends StatefulWidget {
 }
 
 class _PostTileState extends State<PostTile> {
+  late final postCubit = context.read<PostCubit>();
+  late final profileCubit = context.read<PostCubit>();
+
+  bool isOwnPost = false;
+
+  AppUser? currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+    fetchPostUser();
+  }
+
+  void getCurrentUser() {
+    final authCubit = context.read<AuthCubit>();
+    currentUser = authCubit.currentUser;
+    isOwnPost = (widget.post.userId == currentUser!.uid);
+  }
+
+  Future<void> fetchPostUser() async {}
+
   void showOptions() {
     showDialog(
       context: context,
@@ -21,7 +48,7 @@ class _PostTileState extends State<PostTile> {
         title: const Text('Delete Post?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(), // ✅ Fixed here
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text('Cancel'),
           ),
           TextButton(
@@ -36,7 +63,6 @@ class _PostTileState extends State<PostTile> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,10 +70,8 @@ class _PostTileState extends State<PostTile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.post.userName),
-            IconButton(
-                onPressed: widget.onDeletePressed,
-                icon: const Icon(Icons.delete))
+            const Icon(Icons.person),
+            IconButton(onPressed: showOptions, icon: const Icon(Icons.delete))
           ],
         ),
         CachedNetworkImage(
