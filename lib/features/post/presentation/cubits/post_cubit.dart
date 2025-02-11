@@ -14,30 +14,25 @@ class PostCubit extends Cubit<PostState> {
   PostCubit({required this.postRepo, required this.storageRepo})
       : super(PostsInitial());
 
-  // create a new post
   Future<void> createPost(Post post,
       {String? imagePath, Uint8List? imageBytes}) async {
     String? imageUrl;
 
-    // handle image upload for mobile platforms (using file path)
     try {
       if (imagePath != null) {
         emit(PostsUploading());
-        imageUrl =
-            await storageRepo.uploadProfileImageMobile(imagePath, post.id);
+        imageUrl = await storageRepo.uploadPostImageMobile(imagePath, post.id);
       }
 
-      // handle image upload for web platforms (using file bytes)
       if (imageBytes != null) {
         emit(PostsUploading());
-        imageUrl = await storageRepo.uploadProfileImageWeb(imageBytes, post.id);
+        imageUrl = await storageRepo.uploadPostImageWeb(imageBytes, post.id);
       }
 
-      // give image url to post
-      final newPost = post.copyWith(imageUrl: imageUrl);
+      // final newPost = post.copyWith(imageUrl: imageUrl);
 
-      // create post in the backend
-      postRepo.createPost(newPost);
+      // await postRepo.createPost(newPost);
+      await fetchAllPosts();
     } catch (e) {
       emit(PostsError('Failed to create posts: $e'));
     }
@@ -47,9 +42,12 @@ class PostCubit extends Cubit<PostState> {
   Future<void> fetchAllPosts() async {
     try {
       emit(PostsLoading());
+      print('Fetching posts...'); // Debugging
       final posts = await postRepo.fetchAllPosts();
+      print('Posts fetched: ${posts.length}'); // Debugging
       emit(PostsLoaded(posts));
     } catch (e) {
+      print('Error fetching posts: $e'); // Debugging
       emit(PostsError('Failed to fetch posts: $e'));
     }
   }
@@ -58,6 +56,9 @@ class PostCubit extends Cubit<PostState> {
   Future<void> deletePost(String postId) async {
     try {
       await postRepo.deletePost(postId);
-    } catch (e) {}
+      fetchAllPosts();
+    } catch (e) {
+      emit(PostsError('Failed to delete post: $e'));
+    }
   }
 }

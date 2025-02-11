@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mentor_hub/features/mentors/presentation/pages/mentors_page.dart';
 
 import '../../../auth/presentation/cubits/auth_cubit.dart';
 import '../../../post/presentation/pages/upload_post_page.dart';
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
     //Scaffold
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         titleSpacing: 5,
         title: const Text('  Home'),
         foregroundColor: Colors.black,
@@ -64,9 +62,10 @@ class _HomePageState extends State<HomePage> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Colors.blue,
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

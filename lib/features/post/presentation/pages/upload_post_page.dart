@@ -22,6 +22,8 @@ class UploadPostPage extends StatefulWidget {
 class _UploadPostPageState extends State<UploadPostPage> {
   // mobile image pick
   PlatformFile? imagePickedFile;
+  List<PlatformFile> imagePickedFiles = [];
+  List<Uint8List> webImages = [];
 
   // web image pick
   Uint8List? webImage;
@@ -45,16 +47,19 @@ class _UploadPostPageState extends State<UploadPostPage> {
   }
 
   // select image
-  Future<void> pickImage() async {
-    final result = await FilePicker.platform
-        .pickFiles(type: FileType.image, withData: kIsWeb);
+  Future<void> pickImages() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true, // Allow multiple image selection
+      withData: kIsWeb, // Needed for web
+    );
 
     if (result != null) {
       setState(() {
-        imagePickedFile = result.files.first;
+        imagePickedFiles = result.files; // Store selected images
 
         if (kIsWeb) {
-          webImage = imagePickedFile!.bytes;
+          webImages = imagePickedFiles.map((file) => file.bytes!).toList();
         }
       });
     }
@@ -63,12 +68,12 @@ class _UploadPostPageState extends State<UploadPostPage> {
   // create & upload post
   void uploadPost() {
     // check if both image and caption are provided
-    if (imagePickedFile == null || textController.text.isEmpty) {
+    if (imagePickedFiles == null || textController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Both image and caption are required')));
       return;
     }
-
+    String? imageUrl;
     // create a new post object
     final newPost = Post(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -101,6 +106,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
   Widget build(BuildContext context) {
     // BLOC CONSUMER -> builder + listener
     return BlocConsumer<PostCubit, PostState>(builder: (context, state) {
+      print(state);
       // loading.. or uploading
       if (state is PostsLoading || state is PostsUploading) {
         return const Scaffold(
@@ -135,20 +141,66 @@ class _UploadPostPageState extends State<UploadPostPage> {
       body: Center(
         child: Column(
           children: [
-            // image preview for web
-            if (kIsWeb && webImage != null) Image.memory(webImage!),
-
-            // image preview for mobile
-            if (!kIsWeb && imagePickedFile != null)
-              Image.file(File(imagePickedFile!.path!)),
-
-            // pick image button
-            MaterialButton(
-              onPressed: pickImage,
-              color: Colors.blue,
-              child: const Text('Pick image'),
+            if (kIsWeb && webImages.isNotEmpty)
+              SizedBox(
+                height: 200, // Limit the height
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Two images per row
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemCount: webImages.length,
+                  itemBuilder: (context, index) {
+                    return Image.memory(
+                      webImages[index],
+                      height: 10,
+                      fit: BoxFit.cover, // Adjust image to fit nicely
+                    );
+                  },
+                ),
+              )
+            else if (!kIsWeb && imagePickedFiles.isNotEmpty)
+              SizedBox(
+                height: 200,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Two images per row
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemCount: imagePickedFiles.length,
+                  itemBuilder: (context, index) {
+                    return Image.file(
+                      File(imagePickedFiles[index].path!),
+                      height: 10,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
+              ),
+            const SizedBox(
+              height: 30,
             ),
-
+            // pick image button
+            ElevatedButton(
+              onPressed: pickImages,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('Pick Image'),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             // caption text box
             MyTextfield(
                 controller: textController,
