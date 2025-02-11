@@ -137,7 +137,6 @@ class _UploadPostPageState extends State<UploadPostPage> {
         ),
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
-          // upload button
           IconButton(
               onPressed: uploadPost,
               icon: const Icon(
