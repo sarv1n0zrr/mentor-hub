@@ -86,19 +86,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            // News Section
             _buildSectionTitle("Latest News"),
             _buildNewsSection(),
 
-            // Notifications Section
             _buildSectionTitle("Notifications"),
             _buildNotifications(),
 
-            // Interesting Ideas & Competitions
             _buildSectionTitle("Interesting Ideas & Competitions"),
             _buildCompetitions(),
 
-            // User Posts
             _buildSectionTitle("User Posts"),
             BlocBuilder<PostCubit, PostState>(
               builder: (context, state) {
@@ -153,7 +149,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Section Title Widget
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -168,7 +163,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // News Section
   Widget _buildNewsSection() {
     return SizedBox(
       height: 150,
@@ -210,7 +204,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Notifications Section
   Widget _buildNotifications() {
     return Column(
       children: [
@@ -230,7 +223,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Competitions & Ideas
   Widget _buildCompetitions() {
     return Column(
       children: [
