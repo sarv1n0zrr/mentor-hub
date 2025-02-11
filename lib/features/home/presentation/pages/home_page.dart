@@ -8,42 +8,13 @@ import 'package:mentor_hub/features/profile/presentation/pages/profile_page.dart
 import '../../../post/presentation/pages/upload_post_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  final TextEditingController _searchController = TextEditingController();
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    // if (index == 4) {
-    //   context.read<AuthCubit>().logout();
-    // }
-
-    if (index == 1) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  MentorsPage(searchController: _searchController)));
-    }
-    if (index == 2) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UploadPostPage()));
-    }
-
-    if (index == 4) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfilePage()));
-    }
-  }
-
   late final postCubit = context.read<PostCubit>();
 
   @override
@@ -125,28 +96,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.blue,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.purple,
-        unselectedItemColor: Colors.black54,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.inventory_2_outlined), label: 'Courses'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline), label: 'Add'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), label: 'Favorites'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_outlined), label: 'Profile'),
-        ],
       ),
     );
   }
