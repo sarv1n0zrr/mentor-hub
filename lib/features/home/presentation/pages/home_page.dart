@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         titleSpacing: 5,
         title: const Text('  Home'),
-        foregroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
           // logout button
           IconButton(

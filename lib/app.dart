@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 90, 154, 226),
+                  Color(0xFFFFFFFF),
                   Color(0xFFFFFFFF),
                 ], // Gradient colors
                 begin: Alignment.topRight,
