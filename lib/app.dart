@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mentor_hub/features/auth/data/firebase_auth_repo.dart';
+import 'package:mentor_hub/features/auth/data/repository/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
 import 'package:mentor_hub/features/post/data/firebase_post_repo.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
 import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
-
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
 import 'features/home/presentation/pages/home_page.dart';
@@ -41,30 +40,42 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: lightMode,
-        home: BlocConsumer<AuthCubit, AuthState>(builder: (context, authState) {
-          print(authState);
-          if (authState is Unauthenticated) {
-            return const AuthPage();
-          }
-
-          if (authState is Authenticated) {
-            return const HomePage();
-          } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+        theme: lightMode.copyWith(
+          scaffoldBackgroundColor: Colors.transparent,
+        ),
+        builder: (context, child) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 90, 154, 226),
+                  Color(0xFFFFFFFF),
+                ], // Gradient colors
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
               ),
-            );
-          }
+            ),
+            child: child,
+          );
         },
-            // listens for any errors.....
-            listener: (context, state) {
-          if (state is AuthError) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
-          }
-        }),
+        home: BlocConsumer<AuthCubit, AuthState>(
+          builder: (context, authState) {
+            if (authState is Unauthenticated) {
+              return const AuthPage();
+            }
+
+            if (authState is Authenticated) {
+              return const HomePage();
+            } else {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
+          listener: (context, state) {},
+        ),
       ),
     );
   }
