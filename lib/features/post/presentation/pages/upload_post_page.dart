@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/post/domain/entitles/post.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
@@ -131,11 +130,21 @@ class _UploadPostPageState extends State<UploadPostPage> {
   Widget buildUploadedPage() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Post'),
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Create Post',
+          style: TextStyle(color: Colors.white),
+        ),
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           // upload button
-          IconButton(onPressed: uploadPost, icon: const Icon(Icons.upload))
+          IconButton(
+              onPressed: uploadPost,
+              icon: const Icon(
+                Icons.upload,
+                color: Colors.white,
+                size: 30,
+              ))
         ],
       ),
       body: Center(
@@ -143,7 +152,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
           children: [
             if (kIsWeb && webImages.isNotEmpty)
               SizedBox(
-                height: 200, // Limit the height
+                height: 300, // Limit the height
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Two images per row
@@ -162,7 +171,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
               )
             else if (!kIsWeb && imagePickedFiles.isNotEmpty)
               SizedBox(
-                height: 200,
+                height: 300,
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Two images per row
@@ -202,10 +211,30 @@ class _UploadPostPageState extends State<UploadPostPage> {
               height: 30,
             ),
             // caption text box
-            MyTextfield(
-                controller: textController,
-                hintText: 'Caption',
-                obscureText: false)
+            Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextField(
+                  controller: textController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    hintText: 'Caption',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 3),
+                    ),
+                  ),
+                ))
           ],
         ),
       ),

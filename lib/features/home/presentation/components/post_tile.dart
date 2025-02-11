@@ -65,24 +65,29 @@ class _PostTileState extends State<PostTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(Icons.person),
-            IconButton(onPressed: showOptions, icon: const Icon(Icons.delete))
-          ],
-        ),
-        CachedNetworkImage(
-          imageUrl: widget.post.imageUrl,
-          height: 430,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => const SizedBox(height: 430),
-          errorWidget: (context, url, error) => const Icon(Icons.error_outline),
-        ),
-      ],
+    return Container(
+      width: 300,
+      height: 400,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Icon(Icons.person),
+              IconButton(onPressed: showOptions, icon: const Icon(Icons.delete))
+            ],
+          ),
+          CachedNetworkImage(
+            imageUrl: widget.post.imageUrl,
+            height: 350,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => const SizedBox(height: 430),
+            errorWidget: (context, url, error) =>
+                const Icon(Icons.error_outline),
+          ),
+        ],
+      ),
     );
   }
 }
