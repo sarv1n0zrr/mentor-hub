@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/data/repository/firebase_auth_repo.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
+import 'package:mentor_hub/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:mentor_hub/features/post/data/firebase_post_repo.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
 import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
         ),
+        BlocProvider(create: (context) => FavoritesBloc()),
 
         // profile cubit
         // BlocProvider<ProfileCubit>(

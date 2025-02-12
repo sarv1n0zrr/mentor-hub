@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentor_hub/features/favorites/presentation/favorites_page.dart';
+import 'package:mentor_hub/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:mentor_hub/features/home/presentation/pages/home_page.dart';
 import 'package:mentor_hub/features/mentors/presentation/pages/mentors_page.dart';
 import 'package:mentor_hub/features/post/presentation/pages/upload_post_page.dart';
@@ -16,7 +16,6 @@ class BasePage extends StatefulWidget {
 
 class _BasePageState extends State<BasePage> {
   late int _selectedIndex;
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
