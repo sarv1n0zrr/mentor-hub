@@ -47,10 +47,12 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.lock_open_rounded,
-                  size: 80,
-                  color: Theme.of(context).colorScheme.primary,
+                Container(
+                  width: 100,
+                  height: 100,
+                  child: Image.asset(
+                    "assets/images/mentorHub_logo.jpg",
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
