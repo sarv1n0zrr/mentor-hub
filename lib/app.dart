@@ -9,6 +9,7 @@ import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
 import 'features/home/presentation/pages/home_page.dart';
+import 'features/common/presentation/pages/base_page.dart';
 
 class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (authState is Authenticated) {
-              return HomePage();
+              return const BasePage();
             } else {
               return const Scaffold(
                 body: Center(
