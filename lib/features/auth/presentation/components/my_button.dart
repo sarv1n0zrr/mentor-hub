@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
           vertical: 12,
         ),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: Colors.purple,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(

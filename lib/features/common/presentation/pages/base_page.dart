@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentor_hub/features/favorites/presentation/favorites_page.dart';
 import 'package:mentor_hub/features/home/presentation/pages/home_page.dart';
 import 'package:mentor_hub/features/mentors/presentation/pages/mentors_page.dart';
 import 'package:mentor_hub/features/post/presentation/pages/upload_post_page.dart';
@@ -24,10 +25,10 @@ class _BasePageState extends State<BasePage> {
   }
 
   final List<Widget> _pages = [
-    HomePage(),
+    const HomePage(),
     MentorsPage(searchController: SearchController()),
-    UploadPostPage(),
-    const Center(child: Text('Favorites')), // Заглушка для страницы избранного
+    const UploadPostPage(),
+    FavoritesPage(),
     ProfilePage(),
   ];
 

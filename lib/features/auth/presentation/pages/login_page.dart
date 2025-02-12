@@ -47,10 +47,11 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.lock_open_rounded,
-                  size: 80,
-                  color: Theme.of(context).colorScheme.primary,
+                Image.asset(
+                  'assets/images/logo.jpg',
+                  width: 250,
+                  height: 150,
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   height: 50,
@@ -70,18 +71,18 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Email',
                   obscureText: false,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextfield(
                   controller: pwController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 MyButton(
                   onTap: login,
                   text: 'Login',
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -91,15 +92,15 @@ class _LoginPageState extends State<LoginPage> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: widget.togglePages,
-                      child: Text(
+                      child: const Text(
                         'Register',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
+                          color: Colors.purple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

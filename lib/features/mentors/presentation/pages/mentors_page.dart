@@ -18,8 +18,7 @@ class _MentorsPageState extends State<MentorsPage> {
     switch (_selected) {
       case "Courses":
         return SingleChildScrollView(
-          child: Container(
-              child: Column(
+          child: Column(
             children: [
               SizedBox(
                 width: double.infinity,
@@ -432,7 +431,7 @@ class _MentorsPageState extends State<MentorsPage> {
                 ),
               ),
             ],
-          )),
+          ),
         );
       case "Mentors":
         return SingleChildScrollView(

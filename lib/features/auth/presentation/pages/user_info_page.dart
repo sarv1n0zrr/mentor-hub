@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_button.dart';
 import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
 import '../components/my_dropdown.dart';
+import 'package:mentor_hub/features/home/presentation/pages/home_page.dart'; // Import your actual home page
 
 class UserInfoPage extends StatefulWidget {
   const UserInfoPage({Key? key}) : super(key: key);
@@ -29,7 +30,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
   void saveUserInfo() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      // This should not occur because the user has been registered and is signed in.
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("User not authenticated")),
       );
@@ -38,19 +38,16 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
     final uid = user.uid;
 
-    // Build additional user information
     Map<String, dynamic> userInfo = {
       'role': selectedRole,
       'description': descriptionController.text,
     };
 
-    // If the user is a Mentor, include the selected subject
     if (selectedRole == 'Mentor' && selectedSubject != null) {
       userInfo['subject'] = selectedSubject;
     }
 
     try {
-      // Update the user document in Firestore using the UID as the document ID
       await FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
@@ -59,8 +56,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("User info saved successfully")),
       );
-      // You can navigate to another page (e.g., HomePage) or simply pop this page
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error saving user info: $e")),

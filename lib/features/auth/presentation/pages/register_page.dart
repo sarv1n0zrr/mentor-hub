@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
       // Navigate to UserInfoPage to complete the registration process
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => UserInfoPage()),
+        MaterialPageRoute(builder: (context) => const UserInfoPage()),
       );
     } catch (e) {
       // Handle errors (for example, email already in use, weak password, etc.)
@@ -72,10 +72,11 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.lock_open_rounded,
-                    size: 80,
-                    color: Theme.of(context).colorScheme.primary,
+                  Image.asset(
+                    'assets/images/logo.jpg',
+                    width: 250,
+                    height: 150,
+                    fit: BoxFit.cover,
                   ),
                   const SizedBox(height: 50),
                   Text(
@@ -114,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onTap: registerUser,
                     text: 'Continue',
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -127,10 +128,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(width: 5),
                       GestureDetector(
                         onTap: widget.togglePages,
-                        child: Text(
+                        child: const Text(
                           'Log in',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.inversePrimary,
+                            color: Colors.purple,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
