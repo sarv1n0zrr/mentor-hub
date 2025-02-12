@@ -13,6 +13,10 @@ class ProfilePage extends StatelessWidget {
       create: (context) =>
           ProfileBloc(repository: ProfileRepositoryImpl())..add(LoadProfile()),
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Profile'),
+          backgroundColor: Colors.white,
+        ),
         body: SafeArea(
           child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
@@ -33,16 +37,6 @@ class ProfilePage extends StatelessWidget {
   Widget _buildProfileContent(ProfileLoaded state) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Icon(Icons.arrow_back, size: 28),
-              Spacer(),
-              Icon(Icons.camera_alt_outlined, size: 28),
-            ],
-          ),
-        ),
         Container(
           width: 100,
           height: 100,
@@ -64,7 +58,7 @@ class ProfilePage extends StatelessWidget {
             style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
         SizedBox(height: 20),
         ProfileMenuOption(icon: Icons.person, text: "Edit profile"),
-        ProfileMenuOption(icon: Icons.bar_chart, text: "My stats"),
+        ProfileMenuOption(icon: Icons.bar_chart, text: "My status"),
         ProfileMenuOption(icon: Icons.settings, text: "Settings"),
         ProfileMenuOption(icon: Icons.group, text: "Invite a friend"),
         ProfileMenuOption(icon: Icons.help, text: "Help"),

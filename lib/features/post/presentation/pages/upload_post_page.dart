@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentor_hub/features/auth/presentation/components/my_textfield.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/post/domain/entitles/post.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
@@ -132,108 +133,118 @@ class _UploadPostPageState extends State<UploadPostPage> {
         backgroundColor: Colors.white,
         title: const Text(
           'Create Post',
-          style: TextStyle(color: Colors.purple),
+          style: TextStyle(color: Colors.black),
         ),
         foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
               onPressed: uploadPost,
               icon: const Icon(
-                Icons.upload,
-                color: Colors.white,
+                Icons.file_upload_outlined,
+                color: Colors.black,
                 size: 30,
               ))
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            if (kIsWeb && webImages.isNotEmpty)
-              SizedBox(
-                height: 300, // Limit the height
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two images per row
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (kIsWeb && webImages.isNotEmpty)
+                SizedBox(
+                  height: 300, // Limit the height
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Two images per row
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: webImages.length,
+                    itemBuilder: (context, index) {
+                      return Image.memory(
+                        webImages[index],
+                        height: 10,
+                        fit: BoxFit.cover, // Adjust image to fit nicely
+                      );
+                    },
                   ),
-                  itemCount: webImages.length,
-                  itemBuilder: (context, index) {
-                    return Image.memory(
-                      webImages[index],
-                      height: 10,
-                      fit: BoxFit.cover, // Adjust image to fit nicely
-                    );
-                  },
-                ),
-              )
-            else if (!kIsWeb && imagePickedFiles.isNotEmpty)
-              SizedBox(
-                height: 300,
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two images per row
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+                )
+              else if (!kIsWeb && imagePickedFiles.isNotEmpty)
+                SizedBox(
+                  height: 300,
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Two images per row
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: imagePickedFiles.length,
+                    itemBuilder: (context, index) {
+                      return Image.file(
+                        File(imagePickedFiles[index].path!),
+                        height: 10,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
-                  itemCount: imagePickedFiles.length,
-                  itemBuilder: (context, index) {
-                    return Image.file(
-                      File(imagePickedFiles[index].path!),
-                      height: 10,
-                      fit: BoxFit.cover,
-                    );
-                  },
                 ),
+              const SizedBox(
+                height: 30,
               ),
-            const SizedBox(
-              height: 30,
-            ),
-            // pick image button
-            ElevatedButton(
-              onPressed: pickImages,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              // pick image button
+              ElevatedButton(
+                onPressed: pickImages,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
+                child: const Text('Pick Image'),
               ),
-              child: const Text('Pick Image'),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            // caption text box
-            Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: TextField(
+              const SizedBox(
+                height: 30,
+              ),
+              // caption text box
+              // Padding(
+              //     padding: const EdgeInsets.all(12.0),
+              //     child: TextField(
+              //       controller: textController,
+              //       obscureText: false,
+              //       decoration: InputDecoration(
+              //         hintText: 'Caption',
+              //         border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(8),
+              //           borderSide:
+              //               const BorderSide(color: Colors.blue, width: 2),
+              //         ),
+              //         enabledBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(8),
+              //           borderSide:
+              //               const BorderSide(color: Colors.blue, width: 2),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(8),
+              //           borderSide:
+              //               const BorderSide(color: Colors.blue, width: 3),
+              //         ),
+              //       ),
+              //     ))
+              MyTextfield(
                   controller: textController,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'Caption',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 3),
-                    ),
-                  ),
-                ))
-          ],
+                  hintText: 'Type a caption...',
+                  obscureText: false),
+            ],
+          ),
         ),
       ),
     );

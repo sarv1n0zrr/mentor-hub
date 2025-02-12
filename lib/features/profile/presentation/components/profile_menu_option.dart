@@ -34,7 +34,7 @@ class ProfileMenuOption extends StatelessWidget {
             backgroundColor: Colors.white70,
             child: Icon(
               icon,
-              color: Colors.blue,
+              color: Colors.purple,
             ),
           ),
           title: Text(
