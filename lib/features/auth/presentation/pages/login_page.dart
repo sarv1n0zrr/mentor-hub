@@ -47,12 +47,11 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  child: Image.asset(
-                    "assets/images/mentorHub_logo.jpg",
-                  ),
+                Image.asset(
+                  'assets/images/logo.jpg',
+                  width: 250,
+                  height: 150,
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   height: 50,

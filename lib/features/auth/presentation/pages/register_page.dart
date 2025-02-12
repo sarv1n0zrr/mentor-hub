@@ -129,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       GestureDetector(
                         onTap: widget.togglePages,
                         child: const Text(
-                          'Log in',
+                          'Login',
                           style: TextStyle(
                             color: Colors.purple,
                             fontWeight: FontWeight.bold,
