@@ -5,6 +5,7 @@ import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
 import 'package:mentor_hub/features/post/data/firebase_post_repo.dart';
 import 'package:mentor_hub/features/post/presentation/cubits/post_cubit.dart';
+import 'package:mentor_hub/features/splash/presentation/splash_page.dart';
 import 'package:mentor_hub/features/storage/data/firebase_storage_repo.dart';
 import 'core/theme/light_mode.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
           },
           listener: (context, state) {},
         ),
+        // home: SplashPage(),
       ),
     );
   }
