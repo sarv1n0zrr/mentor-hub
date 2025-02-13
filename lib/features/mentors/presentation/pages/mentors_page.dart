@@ -1,819 +1,229 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentor_hub/features/mentors/presentation/bloc/mentors_bloc.dart';
+import 'package:mentor_hub/features/mentors/presentation/bloc/mentors_event.dart';
+import 'package:mentor_hub/features/mentors/presentation/bloc/mentors_state.dart';
+import 'package:mentor_hub/features/mentors/presentation/widgets/course_card.dart';
+import 'package:mentor_hub/features/mentors/presentation/widgets/mentor_card.dart';
 
-class MentorsPage extends StatefulWidget {
+class MentorsPage extends StatelessWidget {
   const MentorsPage({super.key, required this.searchController});
   final TextEditingController searchController;
 
   @override
-  State<MentorsPage> createState() => _MentorsPageState();
-}
-
-class _MentorsPageState extends State<MentorsPage> {
-  final TextEditingController _searchController = TextEditingController();
-  List<String> searchResults = [];
-  bool isSearching = false;
-  String _selected = "Courses";
-
-  Widget _getSelectedPage() {
-    switch (_selected) {
-      case "Courses":
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Container(
-                        width: 80,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(7),
-                            border: Border.all(color: Colors.black)),
-                        child: Center(
-                          child: Text(
-                            "Subject",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 80,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(
-                        child: Text(
-                          "Location",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Container(
-                      width: 80,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(
-                        child: Text(
-                          "Price",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    Container(
-                      width: 80,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(
-                        child: Text(
-                          "Duration",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      width: 80,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7),
-                          border: Border.all(color: Colors.black)),
-                      child: Center(
-                        child: Text(
-                          "Popular",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => MentorsBloc()),
+      ],
+      child: Scaffold(
+        body: Column(
+          children: [
+            const SizedBox(height: 10),
+            _buildTitle("Courses"),
+            _buildSearchField(),
+            _buildSegmentedButton(),
+            Expanded(
+              child: BlocBuilder<MentorsBloc, MentorsState>(
+                builder: (context, state) {
+                  return _getSelectedPage(state.selected);
+                },
               ),
-              SizedBox(height: 20),
-              Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: Text(
-                              'POSTER',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Course Name',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'description text...',
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '\$17.50',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star_half,
-                                        color: Colors.amber, size: 16),
-                                    SizedBox(width: 5),
-                                    Text('4.5'),
-                                  ],
-                                ),
-                                Icon(Icons.favorite_border, color: Colors.red),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: Text(
-                              'POSTER',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Course Name',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'description text...',
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '\$17.50',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star_half,
-                                        color: Colors.amber, size: 16),
-                                    SizedBox(width: 5),
-                                    Text('4.5'),
-                                  ],
-                                ),
-                                Icon(Icons.favorite_border, color: Colors.red),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: Text(
-                              'POSTER',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Course Name',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'description text...',
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '\$17.50',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star_half,
-                                        color: Colors.amber, size: 16),
-                                    SizedBox(width: 5),
-                                    Text('4.5'),
-                                  ],
-                                ),
-                                Icon(Icons.favorite_border, color: Colors.red),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: Text(
-                              'POSTER',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Course Name',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'description text...',
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '\$17.50',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star,
-                                        color: Colors.amber, size: 16),
-                                    Icon(Icons.star_half,
-                                        color: Colors.amber, size: 16),
-                                    SizedBox(width: 5),
-                                    Text('4.5'),
-                                  ],
-                                ),
-                                Icon(Icons.favorite_border, color: Colors.red),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      case "Mentors":
-        return SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Container(
-                              width: 80,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius: BorderRadius.circular(7),
-                                  border: Border.all(color: Colors.black)),
-                              child: Center(
-                                child: Text(
-                                  "Subject",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 80,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(7),
-                                border: Border.all(color: Colors.black)),
-                            child: Center(
-                              child: Text(
-                                "Subject",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 15),
-                          Container(
-                            width: 80,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(7),
-                                border: Border.all(color: Colors.black)),
-                            child: Center(
-                              child: Text(
-                                "Subject",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 15),
-                          Container(
-                            width: 80,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(7),
-                                border: Border.all(color: Colors.black)),
-                            child: Center(
-                              child: Text(
-                                "Subject",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  children: [
-                    SizedBox(
-                      height: 150,
-                      width: 100,
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey[300],
-                                child: Icon(
-                                  Icons.person,
-                                  size: 20,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Text(
-                                'Alisher Zhunisov',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Python Teacher',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  SizedBox(width: 4),
-                                  Text('5.0'),
-                                ],
-                              ),
-                              SizedBox(height: 2),
-                              Icon(
-                                Icons.favorite_border,
-                                color: Colors.red,
-                                size: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    SizedBox(
-                      height: 150,
-                      width: 100,
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey[300],
-                                child: Icon(
-                                  Icons.person,
-                                  size: 20,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Text(
-                                'Alisher Zhunisov',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Python Teacher',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  SizedBox(width: 4),
-                                  Text('5.0'),
-                                ],
-                              ),
-                              SizedBox(height: 2),
-                              Icon(
-                                Icons.favorite_border,
-                                color: Colors.red,
-                                size: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    SizedBox(
-                      height: 150,
-                      width: 100,
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey[300],
-                                child: Icon(
-                                  Icons.person,
-                                  size: 20,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Text(
-                                'Alisher Zhunisov',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Python Teacher',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  Icon(Icons.star,
-                                      color: Colors.amber, size: 8),
-                                  SizedBox(width: 4),
-                                  Text('5.0'),
-                                ],
-                              ),
-                              SizedBox(height: 2),
-                              Icon(
-                                Icons.favorite_border,
-                                color: Colors.red,
-                                size: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
-          ),
-        );
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getSelectedPage(String selected) {
+    switch (selected) {
+      case "Courses":
+        return _buildCoursesPage();
+      case "Mentors":
+        return _buildMentorsPage();
       default:
         return Container();
     }
   }
 
-  void _onSearch() {
-    setState(() {
-      isSearching = true;
-    });
+  Widget _buildCoursesPage() {
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          CourseCard(
+            courseName: 'Python for Beginners',
+            description: 'After this course you will know all base Python',
+            price: '\$10.50',
+            rating: 4.3,
+            photo: "assets/images/image1.jpg",
+          ),
+          CourseCard(
+            courseName: 'Flutter for Beginners',
+            description: 'After this course you will know all base Flutter',
+            price: '\$15.50',
+            rating: 5.0,
+            photo: "assets/images/image1.jpg",
+          ),
+          CourseCard(
+            courseName: 'Java for Beginners',
+            description: 'After this course you will know all base Java',
+            price: '\$17.50',
+            rating: 3.3,
+            photo: "assets/images/image1.jpg",
+          ),
+          CourseCard(
+            courseName: 'SQL for Beginners',
+            description: 'After this course you will know all base SQL',
+            price: '\$13.50',
+            rating: 4.6,
+            photo: "assets/images/image1.jpg",
+          ),
+        ],
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+  Widget _buildMentorsPage() {
+    return const SingleChildScrollView(
+      child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black)),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Search",
-                    hintStyle: TextStyle(color: Colors.black),
-                    prefixIcon: IconButton(
-                        onPressed: _onSearch,
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.black,
-                        )),
-                    contentPadding: EdgeInsets.symmetric(vertical: 15)),
+          MentorCard(
+            mentorName: 'Alisher Zhunisov',
+            subject: 'Dart Teacher',
+            rating: 5.0,
+            photo: "assets/images/profile.jpg",
+            price: "\$10",
+          ),
+          MentorCard(
+            mentorName: 'Olzhas Tokhtasyn',
+            subject: 'Python Teacher',
+            rating: 5.0,
+            photo: "assets/images/profile.jpg",
+            price: "\$10",
+          ),
+          MentorCard(
+            mentorName: 'Myktybayev Bakytzhan',
+            subject: 'Flutter Teacher',
+            rating: 5.0,
+            photo: "assets/images/profile.jpg",
+            price: "\$10",
+          ),
+          MentorCard(
+            mentorName: 'Vasya Pupkin',
+            subject: 'JavaScript Teacher',
+            rating: 3.5,
+            photo: "assets/images/profile.jpg",
+            price: "\$10",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return BlocBuilder<MentorsBloc, MentorsState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color(0xFFDADBD6),
+                width: 1,
+              ),
+            ),
+            child: TextField(
+              controller: searchController,
+              style: const TextStyle(color: Color(0xFF580AFF)),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "Search",
+                hintStyle: const TextStyle(color: Color(0xFF580AFF)),
+                contentPadding: const EdgeInsets.symmetric(vertical: 2),
+                prefixIcon: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () {
+                    context.read<MentorsBloc>().add(MentorsEvent.search);
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    color: Color(0xFF580AFF),
+                  ),
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: SizedBox(
-              width: double.infinity,
-              child: SegmentedButton(
-                  segments: <ButtonSegment<String>>[
-                    ButtonSegment<String>(
-                        value: "Courses", label: Text("Courses")),
-                    ButtonSegment<String>(
-                        value: "Mentors", label: Text("Mentors"))
-                  ],
-                  selected: {
-                    _selected
-                  },
-                  onSelectionChanged: (newSelection) {
-                    setState(() {
-                      _selected = newSelection.first;
-                    });
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.white; // Цвет активной кнопки
-                      }
-                      return Colors.transparent; // Цвет неактивной кнопки
-                    }),
-                    foregroundColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.black; // Цвет текста активной кнопки
-                      }
-                      return Colors.black54; // Цвет текста неактивной кнопки
-                    }),
-                    side: WidgetStateProperty.all(
-                      BorderSide(
-                          color: Colors.black, width: 2), // Граница кнопок
-                    ),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), //  скругление
-                      ),
-                    ),
-                  )),
-            ),
-          ),
-          Expanded(
-            child: _getSelectedPage(),
-          ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildSegmentedButton() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: SizedBox(
+        width: double.infinity,
+        child: BlocBuilder<MentorsBloc, MentorsState>(
+          builder: (context, state) {
+            return SegmentedButton(
+              segments: const <ButtonSegment<String>>[
+                ButtonSegment<String>(value: "Courses", label: Text("Courses")),
+                ButtonSegment<String>(value: "Mentors", label: Text("Mentors")),
+              ],
+              selected: {state.selected},
+              onSelectionChanged: (newSelection) {
+                if (newSelection.first == "Courses") {
+                  context.read<MentorsBloc>().add(MentorsEvent.selectCourses);
+                } else {
+                  context.read<MentorsBloc>().add(MentorsEvent.selectMentors);
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return Colors.white;
+                  }
+                  return Colors.transparent;
+                }),
+                foregroundColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return const Color(0xFF580AFF);
+                  }
+                  return Colors.black54;
+                }),
+                overlayColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.hovered)) {
+                    return const Color(0xFF580AFF);
+                  }
+                  return null;
+                }),
+                side: WidgetStateProperty.all(
+                  const BorderSide(color: Color(0xFFDADBD6), width: 1),
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
