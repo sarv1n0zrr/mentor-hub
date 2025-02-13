@@ -8,15 +8,15 @@
  |
 
 ---
-| Info Page | Home | Add Post |
+| Info Page | Home | Profile |
 |------------|---------------|----------------|
-| ![image](https://github.com/user-attachments/assets/0aba8b07-17e6-479c-a77a-c3d652f7ab60) | ![image](https://github.com/user-attachments/assets/893a6de5-b0e0-4b32-bfee-e6b00d40e4d0) | ![image](https://github.com/user-attachments/assets/7f54d792-3885-48e2-a26b-f4ead3193ef2) |
+| ![image](https://github.com/user-attachments/assets/0aba8b07-17e6-479c-a77a-c3d652f7ab60) | ![image](https://github.com/user-attachments/assets/893a6de5-b0e0-4b32-bfee-e6b00d40e4d0) | ![image](https://github.com/user-attachments/assets/390f5cdb-4fb3-4fc1-8d02-1d22ad2e6abc) |
 
 ---
 
-| Favorites | Profile | Add Post |
+| Courses | Mentors | Favorites |
 |------------|---------------|----------------|
-| ![image](https://github.com/user-attachments/assets/475affe6-6ec0-4068-a336-f7d9c8afb4eb) | ![image](https://github.com/user-attachments/assets/c8aa0694-7403-4a45-8fb8-75cc5ea5a50f) | ![image](https://github.com/user-attachments/assets/7f54d792-3885-48e2-a26b-f4ead3193ef2) |
+| ![image](https://github.com/user-attachments/assets/1f02bda1-a1af-47de-98cf-be8cc75cc1ed) | ![image](https://github.com/user-attachments/assets/849b048b-b326-4fdf-9d47-45a84fe34d1a) | ![image](https://github.com/user-attachments/assets/f245cbea-a979-4049-86a8-c1c45d9a7da2) |
 
 ---
 
