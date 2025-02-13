@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:mentor_hub/features/auth/presentation/cubits/auth_states.dart';
+import 'package:mentor_hub/features/auth/presentation/pages/auth_page.dart';
+import 'package:mentor_hub/features/auth/presentation/pages/login_page.dart';
 import '../../data/profile_repo_impl.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
@@ -13,29 +16,41 @@ class ProfilePage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           ProfileBloc(repository: ProfileRepositoryImpl())..add(LoadProfile()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Profile'),
-          actions: [
-            IconButton(
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is Unauthenticated) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        LoginPage(togglePages: AuthPage.new)));
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Profile'),
+            actions: [
+              IconButton(
                 onPressed: () {
                   context.read<AuthCubit>().logout();
                 },
-                icon: const Icon(Icons.logout))
-          ],
-          backgroundColor: Colors.white,
-        ),
-        body: SafeArea(
-          child: BlocBuilder<ProfileBloc, ProfileState>(
-            builder: (context, state) {
-              if (state is ProfileLoading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is ProfileLoaded) {
-                return _buildProfileContent(state);
-              } else {
-                return Center(child: Text("Failed to load profile"));
-              }
-            },
+                icon: const Icon(Icons.logout),
+              )
+            ],
+            backgroundColor: Colors.white,
+          ),
+          body: SafeArea(
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is ProfileLoaded) {
+                  return _buildProfileContent(state);
+                } else {
+                  return Center(child: Text("Failed to load profile"));
+                }
+              },
+            ),
           ),
         ),
       ),
