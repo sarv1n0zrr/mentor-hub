@@ -1,17 +1,23 @@
+import 'package:hive/hive.dart';
 import 'package:mentor_hub/features/favorites/domain/models/favorite_item.dart';
 
 class FavoritesRepository {
-  final List<FavoriteItem> _favorites = [];
+  static const String _favoritesBox = 'favoritesBox';
 
-  List<FavoriteItem> getFavorites() => _favorites;
-
-  void addFavorite(FavoriteItem item) {
-    if (!_favorites.any((element) => element.id == item.id)) {
-      _favorites.add(item);
+  Future<void> addFavorite(FavoriteItem item) async {
+    final box = await Hive.openBox<FavoriteItem>(_favoritesBox);
+    if (!box.containsKey(item.id)) {
+      await box.put(item.id, item);
     }
   }
 
-  void removeFavorite(String itemId) {
-    _favorites.removeWhere((item) => item.id == itemId);
+  Future<void> removeFavorite(String itemId) async {
+    final box = await Hive.openBox<FavoriteItem>(_favoritesBox);
+    await box.delete(itemId);
+  }
+
+  Future<List<FavoriteItem>> getFavorites() async {
+    final box = await Hive.openBox<FavoriteItem>(_favoritesBox);
+    return box.values.toList();
   }
 }

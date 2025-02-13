@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  _isCreatingPost = true; // Show Create Post form
+                  _isCreatingPost = true;
                 });
               },
               icon: const Icon(Icons.add_circle_outline,
