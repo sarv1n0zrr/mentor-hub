@@ -61,25 +61,25 @@ class MyApp extends StatelessWidget {
             child: child,
           );
         },
-        home: BlocConsumer<AuthCubit, AuthState>(
-          builder: (context, authState) {
-            if (authState is Unauthenticated) {
-              return const AuthPage();
-            }
+        // home: BlocConsumer<AuthCubit, AuthState>(
+        //   builder: (context, authState) {
+        //     if (authState is Unauthenticated) {
+        //       return const AuthPage();
+        //     }
 
-            if (authState is Authenticated) {
-              return const BasePage();
-            } else {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          },
-          listener: (context, state) {},
-        ),
-        // home: SplashPage(),
+        //     if (authState is Authenticated) {
+        //       return const BasePage();
+        //     } else {
+        //       return const Scaffold(
+        //         body: Center(
+        //           child: CircularProgressIndicator(),
+        //         ),
+        //       );
+        //     }
+        //   },
+        //   listener: (context, state) {},
+        // ),
+        home: SplashPage(),
       ),
     );
   }

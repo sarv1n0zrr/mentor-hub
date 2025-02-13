@@ -11,10 +11,27 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Center(
-        child: Lottie.asset(
-          'assets/animations/Animation - 1739417240420.json',
-        ),
+      splash: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 220,
+            child: Lottie.asset(
+              'assets/animations/Animation - 1739417240420.json',
+              fit: BoxFit.contain,
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Welcome to Mentor Hub!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.purple,
+            ),
+          ),
+        ],
       ),
       nextScreen: _getNextScreen(),
       splashTransition: SplashTransition.fadeTransition,

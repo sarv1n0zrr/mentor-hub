@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentor_hub/features/auth/presentation/cubits/auth_cubit.dart';
 import '../../data/profile_repo_impl.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
@@ -15,6 +16,13 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.read<AuthCubit>().logout();
+                },
+                icon: const Icon(Icons.logout))
+          ],
           backgroundColor: Colors.white,
         ),
         body: SafeArea(

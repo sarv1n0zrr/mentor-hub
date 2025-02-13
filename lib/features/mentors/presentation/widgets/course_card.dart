@@ -9,7 +9,7 @@ import 'package:mentor_hub/features/favorites/presentation/bloc/favorites_state.
 class CourseCard extends StatelessWidget {
   final String courseName;
   final String description;
-  final String price;
+  final double price;
   final double rating;
   final String photo;
 
@@ -70,7 +70,7 @@ class CourseCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              price,
+                              price.toString(),
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

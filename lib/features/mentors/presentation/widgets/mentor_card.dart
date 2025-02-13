@@ -11,7 +11,7 @@ class MentorCard extends StatelessWidget {
   final String subject;
   final double rating;
   final String photo;
-  final String price;
+  final double price;
 
   const MentorCard({
     Key? key,
@@ -70,7 +70,7 @@ class MentorCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              price,
+                              price.toString(),
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
